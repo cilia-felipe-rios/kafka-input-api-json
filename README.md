@@ -1,6 +1,6 @@
 # input-api-json
 
-REST API for ingesting JSON order payloads. Part of the [Kafka PoC - Order Processing System](https://github.com/cilia-felipe-rios/kafka-input-api-json/blob/master/README.md).
+REST API for ingesting JSON order payloads. Part of the [Kafka PoC - Order Processing System](https://github.com/cilia-felipe-rios/kafka-input-api-json/tree/master).
 
 ## Overview
 
