@@ -1,71 +1,58 @@
 # input-api-json
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+REST API for ingesting JSON order payloads. Part of the [Kafka PoC - Order Processing System](https://github.com/cilia-felipe-rios/kafka-input-api-json/blob/master/README.md).
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Overview
 
-## Running the application in dev mode
+This service receives order requests via REST, performs basic validation (schema, required fields), and publishes raw orders to the `orders-json-raw` Kafka topic for downstream transformation.
 
-You can run your application in dev mode that enables live coding using:
+## API
 
-```shell script
+### Create Order
+
+`POST /api/orders`
+
+See [payload specification](https://github.com/cilia-felipe-rios/kafka-poc/blob/main/docs/payloads.md) for request format.
+
+**Responses:**
+- `202 Accepted` — Order accepted and queued for processing
+- `400 Bad Request` — Validation failed (missing fields, invalid format)
+- `401 Unauthorized` — Invalid or missing auth token
+
+## Tech Stack
+
+- Quarkus 3.x (native build)
+- SmallRye Reactive Messaging (Kafka)
+- SmallRye JWT (authentication)
+
+## Running Locally
+
+```bash
+# Dev mode with live reload
 ./mvnw quarkus:dev
-```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
-```
-
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
+# Build native executable
 ./mvnw package -Dnative
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+## Configuration
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+| Property | Default | Description |
+|----------|---------|-------------|
+| `KAFKA_BOOTSTRAP_SERVERS` | `localhost:9092` | Kafka broker address |
+| `QUARKUS_HTTP_PORT` | `8081` | HTTP server port |
+
+## Docker
+
+Build and run via docker-compose from the parent project:
+
+```bash
+docker-compose up -d input-api-json
 ```
 
-You can then execute your native executable with: `./target/input-api-json-1.0-SNAPSHOT-runner`
+Or build standalone:
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and
-  Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
-  it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus
-  REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- SmallRye JWT ([guide](https://quarkus.io/guides/security-jwt)): Secure your applications with JSON Web Token
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+```bash
+docker build -f src/main/docker/Dockerfile.native-multistage -t input-api-json .
+docker run -p 8081:8081 -e KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092 input-api-json
+```

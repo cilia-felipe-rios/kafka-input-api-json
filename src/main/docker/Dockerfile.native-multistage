@@ -1,0 +1,19 @@
+## Stage 1: Build native executable
+FROM quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-21 AS build
+USER root
+WORKDIR /code
+COPY --chown=quarkus:quarkus pom.xml /code/
+COPY --chown=quarkus:quarkus .mvn /code/.mvn
+COPY --chown=quarkus:quarkus mvnw /code/
+RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+COPY --chown=quarkus:quarkus src /code/src
+RUN ./mvnw package -Dnative -DskipTests
+
+## Stage 2: Runtime
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7
+WORKDIR /work/
+RUN chown 1001 /work && chmod "g+rwX" /work && chown 1001:root /work
+COPY --from=build --chown=1001:root --chmod=0755 /code/target/*-runner /work/application
+EXPOSE 8080
+USER 1001
+ENTRYPOINT ["./application", "-Dquarkus.http.host=0.0.0.0"]
