@@ -1,6 +1,6 @@
-package br.com.cilia.security;
+package br.com.cilia.rest.security;
 
-import br.com.cilia.dto.ApiResponse;
+import br.com.cilia.rest.dto.ApiResponse;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;

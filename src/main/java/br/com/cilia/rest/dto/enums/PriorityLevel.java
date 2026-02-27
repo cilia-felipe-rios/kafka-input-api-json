@@ -1,4 +1,4 @@
-package br.com.cilia.dto.enums;
+package br.com.cilia.rest.dto.enums;
 
 public enum PriorityLevel {
     high,

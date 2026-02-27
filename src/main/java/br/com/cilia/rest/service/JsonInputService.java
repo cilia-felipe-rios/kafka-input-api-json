@@ -1,7 +1,7 @@
-package br.com.cilia.service;
+package br.com.cilia.rest.service;
 
-import br.com.cilia.dto.JsonOrderQueueItem;
-import br.com.cilia.dto.OrderInput;
+import br.com.cilia.rest.dto.JsonOrderQueueItem;
+import br.com.cilia.rest.dto.OrderInput;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Channel;

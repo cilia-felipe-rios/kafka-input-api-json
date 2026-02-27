@@ -1,6 +1,6 @@
-package br.com.cilia.exception.mappers;
+package br.com.cilia.rest.exception;
 
-import br.com.cilia.dto.ApiResponse;
+import br.com.cilia.rest.dto.ApiResponse;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.ws.rs.core.Response;

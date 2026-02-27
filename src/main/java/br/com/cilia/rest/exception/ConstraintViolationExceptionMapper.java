@@ -1,6 +1,6 @@
-package br.com.cilia.exception.mappers;
+package br.com.cilia.rest.exception;
 
-import br.com.cilia.dto.ApiResponse;
+import br.com.cilia.rest.dto.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;

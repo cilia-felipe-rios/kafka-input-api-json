@@ -1,4 +1,4 @@
-package br.com.cilia.dto;
+package br.com.cilia.rest.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

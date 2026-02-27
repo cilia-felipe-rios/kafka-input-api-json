@@ -1,4 +1,4 @@
-package br.com.cilia.dto;
+package br.com.cilia.rest.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
