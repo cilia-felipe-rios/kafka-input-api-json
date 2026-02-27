@@ -12,7 +12,7 @@ This service receives order requests via REST, performs basic validation (schema
 
 `POST /api/orders`
 
-See [jsonOrderQueueItem specification](https://github.com/cilia-felipe-rios/kafka-poc/blob/main/docs/payloads.md) for request format.
+See [restOrderQueueItem specification](https://github.com/cilia-felipe-rios/kafka-poc/blob/main/docs/payloads.md) for request format.
 
 **Responses:**
 - `202 Accepted` — Order accepted and queued for processing

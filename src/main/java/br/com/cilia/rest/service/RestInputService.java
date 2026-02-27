@@ -1,6 +1,6 @@
 package br.com.cilia.rest.service;
 
-import br.com.cilia.rest.dto.JsonOrderQueueItem;
+import br.com.cilia.rest.dto.RestOrderQueueItem;
 import br.com.cilia.rest.dto.OrderInput;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -11,14 +11,14 @@ import java.time.Instant;
 import java.util.UUID;
 
 @ApplicationScoped
-public class JsonInputService {
+public class RestInputService {
 
     @Inject
-    @Channel("orders-json-raw")
-    Emitter<JsonOrderQueueItem> emitter;
+    @Channel("orders-rest-raw")
+    Emitter<RestOrderQueueItem> emitter;
 
     public void createOrder(OrderInput orderInput) throws IllegalArgumentException {
-        JsonOrderQueueItem jsonOrderQueueItem = new JsonOrderQueueItem(UUID.randomUUID().toString(), orderInput, Instant.now().toEpochMilli());
-        emitter.send(jsonOrderQueueItem);
+        RestOrderQueueItem restOrderQueueItem = new RestOrderQueueItem(UUID.randomUUID().toString(), orderInput, Instant.now().toEpochMilli());
+        emitter.send(restOrderQueueItem);
     }
 }
