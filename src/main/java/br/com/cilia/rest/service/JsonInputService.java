@@ -14,7 +14,7 @@ import java.util.UUID;
 public class JsonInputService {
 
     @Inject
-    @Channel("json-input")
+    @Channel("orders-json-raw")
     Emitter<JsonOrderQueueItem> emitter;
 
     public void createOrder(OrderInput orderInput) throws IllegalArgumentException {
